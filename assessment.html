@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>自评中心 - 临床前口腔技能实训新体系</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-assessment">
+<nav class="navbar">
+    <div class="logo">
+        <img src="川大校徽.png" alt="四川大学">
+    </div>
+    <div class="nav-links">
+        <a href="index.html">课程简介</a>
+        <a href="syllabus.html">教学内容</a>
+        <a href="assessment.html" class="active">自评中心</a>
+        <a href="forum.html">学生论坛</a>
+        <a href="booking.html">设备预约</a>
+        <a href="shapr3d.html">Shapr3D</a>
+        <div id="auth-section"
+             style="margin-left: 1.5rem; padding-left: 1.5rem; border-left: 1px solid #e2e8f0; display: flex; align-items: center;">
+            <a href="login.html" class="btn btn-primary" style="padding: 0.3rem 1.2rem; font-size: 0.9rem;">登录</a>
+        </div>
+</nav>
+
+<div class="container">
+    <h1 class="page-title">自评中心</h1>
+    <p class="page-desc">请在各季度规定时间内完成自评，形成个人学习曲线。</p>
+
+    <div class="grid-container" style="margin-bottom: 3rem;">
+        <div class="card card-active" style="text-align: center;">
+            <h2 style="color: var(--medical-blue); margin-bottom: 0.5rem;">Q1 第一季度</h2>
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1.5rem;">1月1日 — 3月31日</p>
+            <div style="margin-bottom: 1rem;">
+                <span style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;">● 开放填报中</span>
+            </div>
+            <button onclick="openForm('2026年 第一季度')" class="btn btn-primary" style="width: 100%;">进入评估</button>
+        </div>
+
+        <div class="card card-locked" style="text-align: center;">
+            <h2 style="color: #64748b; margin-bottom: 0.5rem;">Q2 第二季度</h2>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem;">4月1日 — 6月30日</p>
+            <div style="margin-bottom: 1rem;">
+                <span style="background: #f1f5f9; color: #64748b; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">🔒 尚未开放</span>
+            </div>
+            <button class="btn btn-disabled" style="width: 100%;" disabled>4月1日 开启</button>
+        </div>
+
+        <div class="card card-locked" style="text-align: center;">
+            <h2 style="color: #64748b; margin-bottom: 0.5rem;">Q3 第三季度</h2>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem;">7月1日 — 9月30日</p>
+            <div style="margin-bottom: 1rem;">
+                <span style="background: #f1f5f9; color: #64748b; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">🔒 尚未开放</span>
+            </div>
+            <button class="btn btn-disabled" style="width: 100%;" disabled>7月1日 开启</button>
+        </div>
+
+        <div class="card card-locked" style="text-align: center;">
+            <h2 style="color: #64748b; margin-bottom: 0.5rem;">Q4 第四季度</h2>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem;">10月1日 — 12月31日</p>
+            <div style="margin-bottom: 1rem;">
+                <span style="background: #f1f5f9; color: #64748b; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">🔒 尚未开放</span>
+            </div>
+            <button class="btn btn-disabled" style="width: 100%;" disabled>10月1日 开启</button>
+        </div>
+    </div>
+
+    <div id="assessment-form-section" class="content-box" style="display: none; animation: fadeIn 0.5s;">
+        <h2 id="dynamic-form-title"
+            style="margin-bottom: 1.5rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 1rem; color: var(--scu-red);">
+        </h2>
+        <form onsubmit="alert('评估报告已提交！'); document.getElementById('assessment-form-section').style.display='none'; return false;">
+            <div class="form-group">
+                <label>根管治疗操作自评 (1-10分)</label>
+                <input type="number" class="form-control" min="1" max="10" placeholder="请输入你的打分" required>
+            </div>
+            <div class="form-group">
+                <label>树脂补牙操作自评 (1-10分)</label>
+                <input type="number" class="form-control" min="1" max="10" placeholder="请输入你的打分" required>
+            </div>
+            <div class="form-group">
+                <label>后牙全冠备牙自评 (1-10分)</label>
+                <input type="number" class="form-control" min="1" max="10" placeholder="请输入你的打分" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">提交本季度评估报告</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openForm(quarterName) {
+        // 显示表单区域
+        const formSection = document.getElementById('assessment-form-section');
+        formSection.style.display = 'block';
+
+        // 动态修改表单标题
+        document.getElementById('dynamic-form-title').innerText = quarterName + ' 技能实训自评表';
+
+        // 平滑滚动到表单位置
+        window.scrollTo({
+            top: formSection.offsetTop - 100,
+            behavior: 'smooth'
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentUser = localStorage.getItem('currentUser');
+        const userRole = localStorage.getItem('userRole');
+        const authSection = document.getElementById('auth-section');
+
+        // 如果存在登录信息，则替换 UI
+        if (currentUser) {
+            if (userRole === 'admin') {
+                authSection.innerHTML = `
+                    <span style="color: var(--scu-red); font-weight: bold; margin-right: 1rem;">⚙️ 管理员</span>
+                    <a href="admin.html" style="color: var(--medical-blue); font-size: 0.9rem; margin-right: 1rem; font-weight: bold;">进入后台</a>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            } else {
+                authSection.innerHTML = `
+                    <span style="color: var(--medical-blue); font-weight: bold; margin-right: 1rem;">🎓 同学: ${currentUser}</span>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            }
+        }
+    });
+
+    // 退出登录，清空缓存并刷新
+    function handleLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        window.location.reload();
+    }
+</script>
+</body>
+</html>

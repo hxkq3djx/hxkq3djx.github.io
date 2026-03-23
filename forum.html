@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>学生论坛 - 临床前口腔技能实训新体系</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-forum">
+<nav class="navbar">
+    <div class="logo">
+        <img src="川大校徽.png" alt="四川大学">
+    </div>
+    <div class="nav-links">
+        <a href="index.html">课程简介</a>
+        <a href="syllabus.html">教学内容</a>
+        <a href="assessment.html">自评中心</a>
+        <a href="forum.html" class="active">学生论坛</a>
+        <a href="booking.html">设备预约</a>
+        <a href="shapr3d.html">Shapr3D</a>
+        <div id="auth-section"
+             style="margin-left: 1.5rem; padding-left: 1.5rem; border-left: 1px solid #e2e8f0; display: flex; align-items: center;">
+            <a href="login.html" class="btn btn-primary" style="padding: 0.3rem 1.2rem; font-size: 0.9rem;">登录</a>
+        </div>
+</nav>
+
+<div class="container">
+    <h1 class="page-title">学生互动论坛</h1>
+    <p class="page-desc">交流课程心得、探讨软件使用技巧。你的反馈是我们改进教学的重要依据。</p>
+
+    <div class="content-box" style="margin-bottom: 2rem;">
+        <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1rem;">
+            <div style="font-weight: bold; color: var(--medical-blue);">2022151640132 &nbsp;&nbsp;&nbsp;张兵</div>
+            <p style="margin-top: 0.5rem;">Shapr3D的布尔运算功能在模拟嵌体洞型的时候非常直观，建议大家多用iPad加Apple
+                Pencil操作！</p>
+        </div>
+        <div>
+            <div style="font-weight: bold; color: var(--medical-blue);">2022151640071 &nbsp;&nbsp;&nbsp;汤屿</div>
+            <p style="margin-top: 0.5rem;">
+                老师，请问3D打印机这周五晚上可以预约吗？我想把上次备牙的模型打出来看看聚合度。</p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h2 style="margin-bottom: 1.5rem; color: var(--scu-red);">发布新讨论 / 提交建议</h2>
+        <form onsubmit="alert('感谢反馈！内容已提交审核。'); return false;">
+            <div class="form-group">
+                <label>讨论主题</label>
+                <input type="text" class="form-control" placeholder="请输入主题（例如：关于贴面预备车针的疑问）" required>
+            </div>
+            <div class="form-group">
+                <label>详细内容</label>
+                <textarea class="form-control" rows="5" placeholder="详细描述你的问题、软件使用心得或对课程的建议..."
+                          required></textarea>
+            </div>
+            <button type="submit" class="btn btn-red" style="width: 100%;">确认发布</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentUser = localStorage.getItem('currentUser');
+        const userRole = localStorage.getItem('userRole');
+        const authSection = document.getElementById('auth-section');
+
+        // 如果存在登录信息，则替换 UI
+        if (currentUser) {
+            if (userRole === 'admin') {
+                authSection.innerHTML = `
+                    <span style="color: var(--scu-red); font-weight: bold; margin-right: 1rem;">⚙️ 管理员</span>
+                    <a href="admin.html" style="color: var(--medical-blue); font-size: 0.9rem; margin-right: 1rem; font-weight: bold;">进入后台</a>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            } else {
+                authSection.innerHTML = `
+                    <span style="color: var(--medical-blue); font-weight: bold; margin-right: 1rem;">🎓 同学: ${currentUser}</span>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            }
+        }
+    });
+
+    // 退出登录，清空缓存并刷新
+    function handleLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        window.location.reload();
+    }
+</script>
+</body>
+</html>
