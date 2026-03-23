@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>教学内容 - 临床前口腔技能实训新体系</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-syllabus">
+
+<nav class="navbar">
+    <div class="logo">
+        <img src="川大校徽.png" alt="四川大学">
+    </div>
+    <div class="nav-links">
+        <a href="index.html">课程简介</a>
+        <a href="syllabus.html" class="active">教学内容</a>
+        <a href="assessment.html">自评中心</a>
+        <a href="forum.html">学生论坛</a>
+        <a href="booking.html">设备预约</a>
+        <a href="shapr3d.html">Shapr3D</a>
+        <div id="auth-section"
+             style="margin-left: 1.5rem; padding-left: 1.5rem; border-left: 1px solid #e2e8f0; display: flex; align-items: center;">
+            <a href="login.html" class="btn btn-primary" style="padding: 0.3rem 1.2rem; font-size: 0.9rem;">登录</a>
+        </div>
+</nav>
+
+<div class="container">
+    <h1 class="page-title">教学内容及要点</h1>
+    <p class="page-desc">涵盖核心临床前操作技能，结合3D空间解析，掌握牙体牙髓学和修复学常规临床操作。</p>
+
+    <div class="grid-container">
+        <div class="card">
+            <h3 style="color: var(--scu-red); margin-bottom: 1rem;">根管治疗</h3>
+            <p>掌握根管治疗全过程。</p>
+
+            <div class="video-wrapper">
+                <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=532851987&bvid=BV1du411N7UQ&cid=1248972877&p=1&danmaku=0"
+                        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-gray); text-align: center;">▲ 根管治疗教学视频</p>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--scu-red); margin-bottom: 1rem;">龋齿充填治疗</h3>
+            <p>学习前磨牙二类洞树脂充填。</p>
+            <div class="video-wrapper">
+                <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=604231246&bvid=BV1F84y167cJ&cid=864307109&p=1danmaku=0"
+                        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-gray); text-align: center;">▲ 龋齿充填治疗教学视频</p>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--scu-red); margin-bottom: 1rem;">全冠备牙</h3>
+            <p>右上中切牙全瓷冠牙体预备。</p>
+            <div class="video-wrapper">
+                <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=855606810&bvid=BV1jL4y1A7Gc&cid=761482193&p=1danmaku=0"
+                        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-gray); text-align: center;">▲ 全冠备牙教学视频</p>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--scu-red); margin-bottom: 1rem;">嵌体备牙</h3>
+            <p>磨牙邻面合金嵌体牙体预备。</p>
+
+            <div class="video-wrapper">
+                <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=1855487824&bvid=BV1qs421M7PX&cid=1570979061&p=1danmaku=0"
+                        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-gray); text-align: center;">▲ 嵌体备牙教学视频</p>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--scu-red); margin-bottom: 1rem;">贴面备牙</h3>
+            <p>前牙贴面对接式预备实操示教</p>
+            <div class="video-wrapper">
+                <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=707893375&bvid=BV1DQ4y1E7kz&cid=1383721244&p=1danmaku=0"
+                        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-gray); text-align: center;">▲ 贴面备牙教学视频</p>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentUser = localStorage.getItem('currentUser');
+        const userRole = localStorage.getItem('userRole');
+        const authSection = document.getElementById('auth-section');
+
+        // 如果存在登录信息，则替换 UI
+        if (currentUser) {
+            if (userRole === 'admin') {
+                authSection.innerHTML = `
+                    <span style="color: var(--scu-red); font-weight: bold; margin-right: 1rem;">⚙️ 管理员</span>
+                    <a href="admin.html" style="color: var(--medical-blue); font-size: 0.9rem; margin-right: 1rem; font-weight: bold;">进入后台</a>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            } else {
+                authSection.innerHTML = `
+                    <span style="color: var(--medical-blue); font-weight: bold; margin-right: 1rem;">🎓 同学: ${currentUser}</span>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            }
+        }
+    });
+
+    // 退出登录，清空缓存并刷新
+    function handleLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        window.location.reload();
+    }
+</script>
+</body>
+</html>

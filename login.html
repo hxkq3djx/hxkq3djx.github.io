@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录 - 临床前口腔技能实训系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-index">
+<nav class="navbar">
+    <div class="logo">
+        <img src="川大校徽.png" alt="四川大学">
+    </div>
+    <div class="nav-links">
+        <a href="index.html">返回首页</a>
+    </div>
+</nav>
+
+<div class="container" style="display: flex; justify-content: center; align-items: center;">
+    <div class="content-box"
+         style="width: 100%; max-width: 400px; text-align: center; padding: 3rem 2rem; margin-top: 5rem;">
+        <h2 style="color: var(--medical-blue); margin-bottom: 2rem;">系统登录</h2>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>账号</label>
+                <input type="text" id="username" class="form-control" placeholder="请输入学号" required>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">登 录</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function handleLogin(event) {
+        event.preventDefault(); // 阻止页面默认刷新
+        const username = document.getElementById('username').value.trim();
+
+        if (username === 'admin') {
+            // 写入管理员身份
+            localStorage.setItem('currentUser', 'admin');
+            localStorage.setItem('userRole', 'admin');
+            window.location.href = 'admin.html';
+        } else {
+            // 写入学生身份
+            localStorage.setItem('currentUser', username);
+            localStorage.setItem('userRole', 'student');
+            window.location.href = 'index.html';
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentUser = localStorage.getItem('currentUser');
+        const userRole = localStorage.getItem('userRole');
+        const authSection = document.getElementById('auth-section');
+
+        // 如果存在登录信息，则替换 UI
+        if (currentUser) {
+            if (userRole === 'admin') {
+                authSection.innerHTML = `
+                    <span style="color: var(--scu-red); font-weight: bold; margin-right: 1rem;">⚙️ 管理员</span>
+                    <a href="admin.html" style="color: var(--medical-blue); font-size: 0.9rem; margin-right: 1rem; font-weight: bold;">进入后台</a>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            } else {
+                authSection.innerHTML = `
+                    <span style="color: var(--medical-blue); font-weight: bold; margin-right: 1rem;">🎓 同学: ${currentUser}</span>
+                    <a href="#" onclick="handleLogout()" style="color: var(--text-gray); font-size: 0.9rem;">退出</a>
+                `;
+            }
+        }
+    });
+
+    // 退出登录，清空缓存并刷新
+    function handleLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        window.location.reload();
+    }
+</script>
+
+</body>
+</html>

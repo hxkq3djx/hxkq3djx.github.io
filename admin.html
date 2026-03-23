@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>教务管理后台 - 临床前口腔技能实训系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-admin">
+<nav class="navbar admin-navbar">
+    <div class="logo" style="color: white; font-weight: bold; font-size: 1.2rem;">
+        ⚙️ 实训系统管理后台
+    </div>
+    <div class="nav-links admin-links" style="display: flex; align-items: center; gap: 2rem;">
+        <a href="#overview" class="active">数据总览</a>
+        <a href="#booking">设备调度</a>
+        <a href="#assessment">成绩与AI分析</a>
+        <a href="#forum">论坛管理</a>
+        <a href="#" onClick="adminLogout()" style="color: #fca5a5; cursor: pointer;">退出后台</a>
+    </div>
+</nav>
+
+
+<div class="container" style="max-width: 1400px;">
+
+    <div id="overview" class="grid-container" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 2rem;">
+        <div class="admin-stat-card">
+            <div class="stat-title">当前系统注册学生</div>
+            <div class="stat-value">128 <span style="font-size: 1rem; color: #166534;">人</span></div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-title">第一季度自评完成率</div>
+            <div class="stat-value" style="color: var(--medical-blue);">85%</div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-title">3D打印机运转负荷</div>
+            <div class="stat-value" id="printer-load" style="color: #ca8a04;">2/3 <span
+                    style="font-size: 1rem;">台</span></div>
+        </div>
+        <div class="admin-stat-card">
+            <div class="stat-title">待审核论坛帖子</div>
+            <div class="stat-value" id="forum-count" style="color: var(--scu-red);">12 <span
+                    style="font-size: 1rem;">条</span></div>
+        </div>
+    </div>
+
+    <div id="booking" class="content-box admin-panel" style="max-width: 100%;">
+        <h2 class="panel-title">🖨️ 3D打印机实时监控与调度</h2>
+        <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="device-card running">
+                <div class="device-header">
+                    <span class="device-name">Formlabs 3B+ (01号)</span>
+                    <span class="badge badge-green">运行中</span>
+                </div>
+                <p>打印任务：下颌骨缺损模型</p>
+                <p>预约人：张三 (2023级)</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+                <p style="text-align: right; font-size: 0.8rem; margin-top: 0.5rem;">剩余 45 分钟</p>
+            </div>
+            <div class="device-card running">
+                <div class="device-header">
+                    <span class="device-name">Formlabs 3B+ (02号)</span>
+                    <span class="badge badge-green">运行中</span>
+                </div>
+                <p>打印任务：全冠备牙导板</p>
+                <p>预约人：李四 (2024级)</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%;"></div>
+                </div>
+                <p style="text-align: right; font-size: 0.8rem; margin-top: 0.5rem;">剩余 2 小时 10 分</p>
+            </div>
+            <div class="device-card idle">
+                <div class="device-header">
+                    <span class="device-name">SprintRay Pro (03号)</span>
+                    <span class="badge badge-blue">空闲待机</span>
+                </div>
+                <p>今日剩余可预约时段：3</p>
+                <button class="btn btn-primary" style="padding: 0.3rem 1rem; font-size: 0.8rem; margin-top: 1rem;"
+                        onclick="toggleDeviceStatus(this)">强制离线维护
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="assessment" class="content-box admin-panel" style="max-width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 class="panel-title" style="margin-bottom: 0;">📊 成绩与AI评估看板</h2>
+            <div>
+                <button class="btn btn-primary" style="background: #166534;" onclick="addNewRecord()">➕ 新增记录
+                </button>
+                <button class="btn btn-primary" id="export-btn" onclick="exportData(this)">📥 导出报表</button>
+            </div>
+        </div>
+        <table class="admin-table" id="assessment-table">
+            <thead>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>操作项目</th>
+                <th>学生自评分</th>
+                <th>AI 智能评分</th>
+                <th style="width: 30%;">系统评语 / 警告</th>
+                <th>操作管理</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>20240101</td>
+                <td>王五</td>
+                <td>后牙全冠备牙</td>
+                <td>8.5</td>
+                <td>8.2</td>
+                <td>无明显倒凹，轴壁聚合度良好</td>
+                <td>
+                    <button class="btn btn-primary"
+                            style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-right: 0.5rem;"
+                            onclick="editRow(this)">编辑
+                    </button>
+                    <button class="btn btn-red" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;"
+                            onclick="deleteRow(this)">删除
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>20240102</td>
+                <td>赵六</td>
+                <td>贴面预备</td>
+                <td>9.0</td>
+                <td>6.5</td>
+                <td>警告：切端预备量不足 1.5mm</td>
+                <td>
+                    <button class="btn btn-primary"
+                            style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-right: 0.5rem;"
+                            onclick="editRow(this)">编辑
+                    </button>
+                    <button class="btn btn-red" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;"
+                            onclick="deleteRow(this)">删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="forum" class="content-box admin-panel" style="max-width: 100%; margin-bottom: 4rem;">
+        <h2 class="panel-title">💬 论坛发帖管理</h2>
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>发帖时间</th>
+                <th>发帖人</th>
+                <th>主题/内容预览</th>
+                <th>状态</th>
+                <th>操作管理</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2026-03-14 10:30</td>
+                <td>2023级 某同学</td>
+                <td><strong>关于贴面预备车针的疑问</strong><br><span
+                        style="color: var(--text-gray); font-size: 0.9rem;">老师，请问对接式预备时，球头金刚砂车针的直径选择多少合适？</span>
+                </td>
+                <td><span class="badge badge-blue">待回复</span></td>
+                <td>
+                    <button class="btn btn-primary"
+                            style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-right: 0.5rem;"
+                            onclick="replyPost(this)">快速回复
+                    </button>
+                    <button class="btn btn-red" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;"
+                            onclick="deleteForumPost(this)">删除
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>2026-03-13 16:45</td>
+                <td>2024级 某同学</td>
+                <td><strong>建议：延长晚间实训室开放时间</strong><br><span
+                        style="color: var(--text-gray); font-size: 0.9rem;">最近大家都在赶模型，晚上9点半关门感觉有点早，能否延长到10点？</span>
+                </td>
+                <td><span class="badge badge-yellow">待审核</span></td>
+                <td>
+                    <button class="btn btn-primary"
+                            style="padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-right: 0.5rem;"
+                            onclick="approvePost(this)">采纳建议
+                    </button>
+                    <button class="btn btn-red" style="background: #cbd5e1; padding: 0.3rem 0.8rem; font-size: 0.8rem;"
+                            onclick="deleteForumPost(this)">驳回
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 1. 设备状态切换反馈
+    function toggleDeviceStatus(btn) {
+        const card = btn.closest('.device-card');
+        const badge = card.querySelector('.badge');
+
+        if (badge.innerText === '空闲待机') {
+            badge.className = 'badge badge-red';
+            badge.innerText = '离线维护';
+            btn.innerText = '恢复上线设备';
+            btn.style.background = '#166534';
+            card.style.borderTopColor = '#991b1b';
+        } else {
+            badge.className = 'badge badge-blue';
+            badge.innerText = '空闲待机';
+            btn.innerText = '强制离线维护';
+            btn.style.background = 'var(--medical-blue)';
+            card.style.borderTopColor = '#0ea5e9';
+        }
+    }
+
+    // 2. 导出报表按钮反馈
+    function exportData(btn) {
+        const originalText = btn.innerText;
+        btn.innerText = '⏳ 正在生成Excel...';
+        btn.style.opacity = '0.7';
+
+        setTimeout(() => {
+            btn.innerText = '✅ 导出成功';
+            btn.style.background = '#166534';
+            btn.style.opacity = '1';
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = 'var(--medical-blue)';
+            }, 3000);
+        }, 1500);
+    }
+
+    // 3. 表格行：进入编辑模式
+    function editRow(btn) {
+        const row = btn.closest('tr');
+        // 获取前6个数据单元格（排除最后一个放按钮的单元格）
+        const cells = Array.from(row.cells).slice(0, 6);
+
+        cells.forEach(cell => {
+            const text = cell.innerText;
+            cell.innerHTML = `<input type="text" class="admin-input" value="${text}">`;
+        });
+
+        btn.innerText = '保存';
+        btn.style.background = '#166534';
+        btn.onclick = function () {
+            saveRow(this);
+        };
+    }
+
+    // 4. 表格行：保存编辑内容
+    function saveRow(btn) {
+        const row = btn.closest('tr');
+        const cells = Array.from(row.cells).slice(0, 6);
+
+        cells.forEach(cell => {
+            const input = cell.querySelector('input');
+            if (input) {
+                cell.innerText = input.value;
+            }
+        });
+
+        btn.innerText = '编辑';
+        btn.style.background = 'var(--medical-blue)';
+        btn.onclick = function () {
+            editRow(this);
+        };
+    }
+
+    // 5. 表格行：删除
+    function deleteRow(btn) {
+        if (confirm('确定要删除这条评测记录吗？')) {
+            btn.closest('tr').remove();
+        }
+    }
+
+    // 6. 表格：新增一条空白记录
+    function addNewRecord() {
+        const tbody = document.querySelector('#assessment-table tbody');
+        const newRow = document.createElement('tr');
+
+        newRow.innerHTML = `
+                <td><input type="text" class="admin-input" placeholder="输入学号"></td>
+                <td><input type="text" class="admin-input" placeholder="输入姓名"></td>
+                <td><input type="text" class="admin-input" placeholder="输入项目"></td>
+                <td><input type="text" class="admin-input" placeholder="自评分"></td>
+                <td><input type="text" class="admin-input" placeholder="AI评分"></td>
+                <td><input type="text" class="admin-input" placeholder="输入评语"></td>
+                <td>
+                    <button class="btn btn-primary" style="background: #166534; padding: 0.3rem 0.8rem; font-size: 0.8rem; margin-right: 0.5rem;" onclick="saveRow(this)">保存</button>
+                    <button class="btn btn-red" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="deleteRow(this)">删除</button>
+                </td>
+            `;
+        // 将新行插入到最前面
+        tbody.insertBefore(newRow, tbody.firstChild);
+    }
+
+    // 7. 论坛互动反馈：回复与采纳
+    function replyPost(btn) {
+        alert('已向该学生发送回复通知。');
+        const badge = btn.closest('tr').querySelector('.badge');
+        badge.className = 'badge badge-green';
+        badge.innerText = '已回复';
+        btn.disabled = true;
+        btn.className = 'btn btn-disabled';
+    }
+
+    function approvePost(btn) {
+        const badge = btn.closest('tr').querySelector('.badge');
+        badge.className = 'badge badge-green';
+        badge.innerText = '已采纳';
+        btn.disabled = true;
+        btn.className = 'btn btn-disabled';
+    }
+
+    function deleteForumPost(btn) {
+        if (confirm('确定移除该帖子？操作不可逆。')) {
+            btn.closest('tr').remove();
+            // 动态更新上方总览的待审核数字
+            const countBadge = document.getElementById('forum-count');
+            countBadge.innerText = parseInt(countBadge.innerText) - 1 + ' 条';
+        }
+    }
+
+    // 页面加载时验证权限
+    document.addEventListener("DOMContentLoaded", function () {
+        const userRole = localStorage.getItem('userRole');
+        if (userRole !== 'admin') {
+            alert('安全拦截：请先使用 admin 账号登录！');
+            window.location.href = 'login.html';
+        }
+    });
+
+    // 处理后台退出逻辑
+    function adminLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        window.location.href = 'index.html'; // 退出后退回前台首页
+    }
+</script>
+
+</body>
+</html>
